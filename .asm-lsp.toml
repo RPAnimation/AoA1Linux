@@ -1,0 +1,15 @@
+[[project]]
+path = ""
+version = "0.10.0"
+assembler = "gas"
+instruction_set = "x86-64"
+
+[project.opts]
+compiler = "gcc"
+compile_flags_txt = [
+    "-g",
+    "-c",
+    "-o ./out/test.out",
+]
+diagnostics = true
+default_diagnostics = false
