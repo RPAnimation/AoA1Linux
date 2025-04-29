@@ -69,26 +69,22 @@ asmMain:
 # syntax "i+1".
 
 		lea		fmtStr1(%rip), %rdi
-        lea     i(%rip), %rax
-		movzbq	0(%rax), %rsi		#load i[0] into RSI 
+		movzbq	i+0(%rip), %rsi		#load i[0] into RSI 
 		mov		$0, %al
 		call	printf
 		
         lea		fmtStr1(%rip), %rdi
-        lea     i(%rip), %rax
-		movzbq	1(%rax), %rsi		#load i[1] into RSI 
+		movzbq	i+1(%rip), %rsi		#load i[0] into RSI 
 		mov		$0, %al
 		call	printf
         
         lea		fmtStr1(%rip), %rdi
-        lea     i(%rip), %rax
-		movzbq	2(%rax), %rsi		#load i[2] into RSI 
+		movzbq	i+2(%rip), %rsi		#load i[0] into RSI 
 		mov		$0, %al
 		call	printf
         
         lea		fmtStr1(%rip), %rdi
-        lea     i(%rip), %rax
-		movzbq	3(%rax), %rsi		#load i[3] into RSI 
+		movzbq	i+3(%rip), %rsi		#load i[0] into RSI 
 		mov		$0, %al
 		call	printf
 
