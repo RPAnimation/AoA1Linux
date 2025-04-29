@@ -24,16 +24,14 @@
 #	See the listing3-0.s file for details on
 #	these equates.
 
-        	.include	"regs.inc"
-
 
 
             .section	const, "a"
 			
 ttlStr:     .asciz		"Listing 3-1"
-fmtStr1:	.asciz		"i[0]=%d "
-fmtStr2:	.asciz		"i[1]=%d "
-fmtStr3:	.asciz		"i[2]=%d "	
+fmtStr1:	.asciz		"i[0]=%d\n"
+fmtStr2:	.asciz		"i[1]=%d\n"
+fmtStr3:	.asciz		"i[2]=%d\n"	
 fmtStr4:	.asciz		"i[3]=%d\n"
 
 
@@ -50,7 +48,7 @@ i:			.byte    0, 1, 2, 3
 
          .global	getTitle
 getTitle:
-         lea ttlStr, rax
+         lea ttlStr(%rip), %rax
          ret
 
 
@@ -61,7 +59,7 @@ getTitle:
         
         .global	asmMain
 asmMain:
-		push	rbx		#Preserve RBX and align stack
+		push	%rbx		#Preserve RBX and align stack
                            
 
 # Sadly, Gas does not allow you to use syntax like "i[1]"
@@ -70,28 +68,30 @@ asmMain:
 # add the offset you want to the base variable using the
 # syntax "i+1".
 
-		mov		$0, al
-		lea		fmtStr1, rdi
-		movzbq	i+0, rsi		#load i[0] into RSI 
+		lea		fmtStr1(%rip), %rdi
+        lea     i(%rip), %rax
+		movzbq	0(%rax), %rsi		#load i[0] into RSI 
+		mov		$0, %al
 		call	printf
-		            
-		mov		$0, al
-		lea		fmtStr2, rdi
-		movzbq	i+1, rsi		#load i[1] into RSI
+		
+        lea		fmtStr1(%rip), %rdi
+        lea     i(%rip), %rax
+		movzbq	1(%rax), %rsi		#load i[1] into RSI 
+		mov		$0, %al
 		call	printf
-		            
-		mov		$0, al
-		lea		fmtStr3, rdi
-		movzbq	i+2, rsi		#load i[2] into RSI
+        
+        lea		fmtStr1(%rip), %rdi
+        lea     i(%rip), %rax
+		movzbq	2(%rax), %rsi		#load i[2] into RSI 
+		mov		$0, %al
 		call	printf
-		            
-		mov		$0, al
-		lea		fmtStr4, rdi
-		movzbq	i+3, rsi		#load i[3] into RSI
-		call	printf	
-	
-                
+        
+        lea		fmtStr1(%rip), %rdi
+        lea     i(%rip), %rax
+		movzbq	3(%rax), %rsi		#load i[3] into RSI 
+		mov		$0, %al
+		call	printf
 
-		pop		rbx
+		pop		%rbx
         ret     #Returns to caller
 
