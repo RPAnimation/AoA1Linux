@@ -28,8 +28,7 @@ b:          .byte    0
         
 # Create a pointer constant, which holds the
 # address of the third element of array "b"
-
-            .equ    pb, b+2
+#            .equ    pb, b+2(rip)
         
             .text
             .extern printf
@@ -39,7 +38,7 @@ b:          .byte    0
 
             .global getTitle
 getTitle:
-            lea ttlStr, rax
+            lea ttlStr(rip), rax
             ret
 
 
@@ -67,9 +66,8 @@ asmMain:
 # the value. This is comparable to the "&" operator in C/C++.  
 
             mov     $0, al          #No XMM/float arguments
-            lea     fmtStr, rdi     #1st parm: format string
-            mov     $pb, rsi        #Takes address of pb, like LEA
-            movzbq  (rsi), rdx      #Second parm
+            lea     fmtStr(rip), rdi     #1st parm: format string
+            movzbq     b+2(rip), rdx        #Takes address of pb, like LEA
             call    printf
             
             pop     rbx             #Clean up stack
